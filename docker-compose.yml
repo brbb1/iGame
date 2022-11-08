@@ -1,0 +1,41 @@
+version: '3'
+services:
+    app:
+        build: .
+        container_name: igame-app
+        volumes:
+            - ./:/var/www
+        networks:
+            - igame-network
+
+    nginx:
+        image: nginx:alpine
+        container_name: igame-nginx
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./:/var/www
+            - ./etc/nginx/conf.d:/etc/nginx/conf.d
+        networks:
+            - igame-network
+
+    db:
+        platform: linux/x86_64
+        image: mysql:5.6.47
+        container_name: igame-db
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: igame
+            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+        volumes:
+            - ./etc/mysql/my.cnf:/etc/mysql/my.cnf
+        networks:
+            - igame-network
+
+networks:
+    igame-network:
+        driver: bridge
