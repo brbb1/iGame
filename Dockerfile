@@ -1,14 +1,13 @@
-FROM php:8.1-fpm
+FROM php:8.1.6-fpm-alpine
 
 WORKDIR /var/www
 
-RUN apt-get update && apt-get install -y curl
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-RUN docker-php-ext-install pdo_mysql
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN apk --update upgrade
+RUN docker-php-ext-install -j$(nproc)  \
+    pdo_mysql \
+    opcache
 
 COPY . /var/www
-
 EXPOSE 9000
-CMD ["php-fpm"]
+
+RUN docker-php-ext-enable opcache
