@@ -2,12 +2,17 @@ FROM php:8.1.6-fpm-alpine
 
 WORKDIR /var/www
 
-RUN apk --update upgrade
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install extensions
 RUN docker-php-ext-install -j$(nproc)  \
     pdo_mysql \
     opcache
 
+RUN docker-php-ext-enable pdo_mysql opcache
+
 COPY . /var/www
 EXPOSE 9000
 
-RUN docker-php-ext-enable opcache
+RUN composer install

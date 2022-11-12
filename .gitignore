@@ -28,3 +28,7 @@ Temporary Items
 
 ### idea files
 .idea/
+
+### composer
+vendor
+composer.lock

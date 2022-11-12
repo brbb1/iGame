@@ -1,6 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
-echo "<pre>" . print_r($_SERVER, true) . "</pre>";
-echo "<pre>" . print_r($_REQUEST, true) . "</pre>";
-echo file_get_contents('php://input');
+use Brbb\Apps\IGame\Http\Request\JsonRequest;
+use Brbb\Apps\IGame\Kernel;
+
+require dirname(__DIR__) . '/../bootstrap.php';
+
+$kernel = new Kernel();
+$request = new JsonRequest();
+$response = $kernel->dispatch($request);
+$response->send();
