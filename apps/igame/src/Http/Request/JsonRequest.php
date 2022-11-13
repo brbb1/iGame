@@ -50,9 +50,10 @@ class JsonRequest implements RequestInterface {
         return $this->data;
     }
 
-    public function addData(array $data): void
+    public function addData(array $data):  JsonRequest
     {
         $this->data = array_merge($this->data, $data);
+        return $this;
     }
 }
 

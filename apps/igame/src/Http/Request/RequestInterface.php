@@ -8,6 +8,6 @@ interface RequestInterface {
     public function getMethod(): string;
     public function getUri(): string;
     public function getData(): array;
-    public function addData(array $data): void;
+    public function addData(array $data): RequestInterface;
 }
 
