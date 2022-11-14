@@ -2,10 +2,9 @@
 
 namespace Brbb\Apps\IGame\API;
 
-use Brbb\Apps\IGame\Http\Request\RequestInterface;
-use Brbb\Apps\IGame\Http\Response\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 interface ControllerInterface
 {
-    public function __invoke(RequestInterface $request): ResponseInterface;
+    public function __invoke(ServerRequestInterface $request, array $args = []): array;
 }

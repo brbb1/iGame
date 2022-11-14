@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Brbb\Apps\IGame\API\V1\Auth;
 
-use Brbb\Apps\IGame\Http\Request\RequestInterface;
-use Brbb\Apps\IGame\Http\Response\JsonResponse;
-use Brbb\Apps\IGame\Http\Response\ResponseInterface;
+use Brbb\Apps\IGame\API\ControllerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
-final class LoginController
+final class LoginController implements ControllerInterface
 {
-    public function __invoke(RequestInterface $request): ResponseInterface
+    public function __invoke(ServerRequestInterface $request, array $args = []): array
     {
-        return new JsonResponse(['uri' => $request->getUri(), 'method' => $request->getMethod()]);
+        return ['uri' => $request->getUri(), 'method' => $request->getMethod()];
     }
 }

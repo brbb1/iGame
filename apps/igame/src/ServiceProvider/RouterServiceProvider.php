@@ -17,15 +17,10 @@ class RouterServiceProvider extends AbstractServiceProvider
 
     public function register(): void
     {
-        $configDir = $this->getContainer()->get('config_dir');
-
         $this->container->add(Router::class);
 
         /** @var Router $router */
         $router = $this->container->get(Router::class);
-        $params = (require $configDir . '/routes.php')();
-        foreach ($params as $param) {
-            $router->map($param['method'], $param['route'], $param['handler']);
-        }
+        (require $this->getContainer()->get('config_dir') . '/routes.php')($router);
     }
 }

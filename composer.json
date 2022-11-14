@@ -12,7 +12,10 @@
 
         "league/container": "^4.2",
         "league/route": "^5.1",
-        "nette/database": "^3.1"
+        "nette/database": "^3.1",
+        "laminas/laminas-http": "^2.17",
+        "laminas/laminas-diactoros": "^2.21",
+        "laminas/laminas-httphandlerrunner": "^2.4"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"
