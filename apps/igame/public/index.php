@@ -2,19 +2,21 @@
 
 declare(strict_types=1);
 
-use League\Container\Container;
-
 $projectDir = dirname(__DIR__);
 
 require $projectDir . '/../bootstrap.php';
 
 // Init DI container
-$container = (new Container())->defaultToShared();
+$container = (new League\Container\Container())->defaultToShared();
 
 $container->add('project_dir', $projectDir);
 $container->add('config_dir', $projectDir . '/config');
 
 $container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\RouterServiceProvider());
+$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\DatabaseServiceProvider());
+
+/** @var \Nette\Database\Connection $database */
+$database = $container->get(\Nette\Database\Connection::class);
 
 // Process request
 /** @var \League\Route\Router $router */

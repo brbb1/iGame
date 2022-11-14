@@ -7,6 +7,8 @@ services:
             - ./:/var/www
         networks:
             - igame-network
+        env_file:
+            - .env
 
     nginx:
         image: nginx:alpine
@@ -16,7 +18,7 @@ services:
             - "443:443"
         volumes:
             - ./:/var/www
-            - ./etc/nginx/conf.d:/etc/nginx/conf.d
+            - ./etc/infrastructure/nginx/conf.d:/etc/nginx/conf.d
         networks:
             - igame-network
 
@@ -26,15 +28,13 @@ services:
         container_name: igame-db
         ports:
             - "3306:3306"
-        environment:
-            MYSQL_DATABASE: igame
-            MYSQL_ROOT_PASSWORD: secret
-            MYSQL_USER: user
-            MYSQL_PASSWORD: pass
         volumes:
-            - ./etc/mysql/my.cnf:/etc/mysql/my.cnf
+            - ./etc/infrastructure/mysql/my.cnf:/etc/mysql/my.cnf
+            - ./etc/database/auth.sql:/docker-entrypoint-initdb.d/auth.sql
         networks:
             - igame-network
+        env_file:
+            - .env
 
 networks:
     igame-network:
