@@ -17,13 +17,15 @@ final class UserAuthenticator
     {
     }
 
-    public function authenticate(AuthUsername $username, AuthPassword $password): void
+    public function authenticate(AuthUsername $username, AuthPassword $password): AuthUser
     {
         $auth = $this->repository->search($username);
 
         $this->ensureUserExist($auth, $username);
         /** @noinspection NullPointerExceptionInspection */
         $this->ensureCredentialsAreValid($auth, $password);
+
+        return $auth;
     }
 
     private function ensureUserExist(?AuthUser $auth, AuthUsername $username): void

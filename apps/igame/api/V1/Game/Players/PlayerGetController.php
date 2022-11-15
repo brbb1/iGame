@@ -15,7 +15,8 @@ final class PlayerGetController implements ControllerInterface
             'uri' => $request->getUri()->getPath(),
             'method' => $request->getMethod(),
             'data' => $request->getUri()->getQuery(),
-            'args' => $args
+            'args' => $args,
+            'post' => $request->getParsedBody()
         ];
     }
 }

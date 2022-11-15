@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brbb\Shared\Domain\Bus\Query;
+namespace Brbb\Shared\Domain\Query;
 
 interface QueryHandler
 {

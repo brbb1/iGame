@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brbb\Apps\IGame\Container\ServiceProvider;
+namespace Brbb\Apps\IGame\ServiceProvider;
 
 use Brbb\IGame\OAuth\Domain\AuthRepository;
 use Brbb\IGame\OAuth\Infrastructure\Persistence\MySqlAuthRepository;

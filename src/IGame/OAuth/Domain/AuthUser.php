@@ -6,8 +6,11 @@ namespace Brbb\IGame\OAuth\Domain;
 
 final class AuthUser
 {
-    public function __construct(private readonly AuthUsername $username, private readonly AuthPassword $password)
-    {
+    public function __construct(
+        private readonly AuthId $id,
+        private readonly AuthUsername $username,
+        private readonly AuthPassword $password
+    ){
     }
 
     public function passwordMatches(AuthPassword $password): bool
@@ -15,8 +18,18 @@ final class AuthUser
         return $this->password->isEquals($password);
     }
 
+    public function id(): AuthId
+    {
+        return $this->id;
+    }
+
     public function username(): AuthUsername
     {
         return $this->username;
+    }
+
+    public function password(): AuthPassword
+    {
+        return $this->password;
     }
 }

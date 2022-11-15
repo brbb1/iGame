@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brbb\Apps\IGame\Container\ServiceProvider;
+namespace Brbb\Apps\IGame\ServiceProvider;
 
 use Laminas\Diactoros\ResponseFactory;
 use League\Container\ServiceProvider\AbstractServiceProvider;

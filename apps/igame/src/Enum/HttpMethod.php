@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brbb\Apps\IGame\Http;
+namespace Brbb\Apps\IGame\Enum;
 
 enum HttpMethod: string
 {

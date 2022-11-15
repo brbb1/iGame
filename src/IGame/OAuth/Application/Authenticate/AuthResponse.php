@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\OAuth\Application\Authenticate;
 
-use Brbb\Shared\Domain\Bus\Command\Response;
+use Brbb\Shared\Domain\Command\Response;
 
 class AuthResponse implements Response
 {
-    public function __construct(private readonly string $token)
+    public function __construct(private readonly int $id)
     {
     }
 
-    public function getToken(): string
+    public function getId(): int
     {
-        return $this->token;
+        return $this->id;
     }
 }

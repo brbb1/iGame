@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\OAuth\Infrastructure\Persistence;
 
+use Brbb\IGame\OAuth\Domain\AuthId;
 use Brbb\IGame\OAuth\Domain\AuthPassword;
 use Brbb\IGame\OAuth\Domain\AuthRepository;
 use Brbb\IGame\OAuth\Domain\AuthUser;
@@ -18,6 +19,15 @@ final class MySqlAuthRepository implements AuthRepository
 
     public function search(AuthUsername $username): ?AuthUser
     {
-        return new AuthUser($username, new AuthPassword('jdj'));
+        $users = $this->connection->query('SELECT id, name, password FROM users WHERE name = ?', $username->value());
+        foreach ($users as $user) {
+            return new AuthUser(
+                new AuthId((int)$user->id),
+                new AuthUsername((string)$user->name),
+                new AuthPassword((string)$user->password)
+            );
+        }
+
+        return null;
     }
 }

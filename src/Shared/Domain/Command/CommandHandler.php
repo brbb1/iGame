@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brbb\Shared\Domain\Bus\Command;
+namespace Brbb\Shared\Domain\Command;
 
 interface CommandHandler
 {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\OAuth\Application\Authenticate;
 
-use Brbb\Shared\Domain\Bus\Command\Command;
+use Brbb\Shared\Domain\Command\Command;
 
 final class AuthenticateUserCommand implements Command
 {

@@ -6,7 +6,7 @@ namespace Brbb\IGame\OAuth\Application\Authenticate;
 
 use Brbb\IGame\OAuth\Domain\AuthPassword;
 use Brbb\IGame\OAuth\Domain\AuthUsername;
-use Brbb\Shared\Domain\Bus\Command\CommandHandler;
+use Brbb\Shared\Domain\Command\CommandHandler;
 
 final class AuthenticateUserCommandHandler implements CommandHandler
 {
@@ -19,6 +19,8 @@ final class AuthenticateUserCommandHandler implements CommandHandler
         $username = new AuthUsername($command->username());
         $password = new AuthPassword($command->password());
 
-        $this->authenticator->authenticate($username, $password);
+        $authUser = $this->authenticator->authenticate($username, $password);
+
+        return new AuthResponse($authUser->id()->value());
     }
 }

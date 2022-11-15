@@ -12,16 +12,18 @@ $container = (new League\Container\Container())->defaultToShared();
 // Add dependencies to container
 $container->add('project_dir', $projectDir);
 $container->add('config_dir', $projectDir . '/config');
+$container->add('secret_key', $_ENV['SECRET_KEY']);
 
-$container->addServiceProvider(new \Brbb\Apps\IGame\Container\ServiceProvider\RouterServiceProvider());
-$container->addServiceProvider(new \Brbb\Apps\IGame\Container\ServiceProvider\RepositoryServiceProvider());
+$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\RouterServiceProvider());
+$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\RepositoryServiceProvider());
+$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\MiddlewareServiceProvider());
 
 // Add Application services
 $container->add(\Brbb\IGame\OAuth\Application\Authenticate\UserAuthenticator::class)
     ->addArgument(\Brbb\IGame\OAuth\Domain\AuthRepository::class);
 
 // Add controllers to container
-$container->addServiceProvider(new \Brbb\Apps\IGame\Container\ServiceProvider\Controller\AuthorizeServiceProvider());
+$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\AuthorizeServiceProvider());
 
 // Process request
 $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
