@@ -30,7 +30,7 @@ services:
             - "3306:3306"
         volumes:
             - ./etc/infrastructure/mysql/my.cnf:/etc/mysql/my.cnf
-            - ./etc/database/auth.sql:/docker-entrypoint-initdb.d/auth.sql
+            - ./etc/database/oauth.sql:/docker-entrypoint-initdb.d/oauth.sql
         networks:
             - igame-network
         env_file:

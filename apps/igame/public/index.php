@@ -13,18 +13,24 @@ $container = (new League\Container\Container())->defaultToShared();
 $container->add('project_dir', $projectDir);
 $container->add('config_dir', $projectDir . '/config');
 
-$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\RouterServiceProvider());
-$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\DatabaseServiceProvider());
+$container->addServiceProvider(new \Brbb\Apps\IGame\Container\ServiceProvider\RouterServiceProvider());
+$container->addServiceProvider(new \Brbb\Apps\IGame\Container\ServiceProvider\RepositoryServiceProvider());
 
-/** @var \Nette\Database\Connection $database */
-$database = $container->get(\Nette\Database\Connection::class);
+// Add Application services
+$container->add(\Brbb\IGame\OAuth\Application\Authenticate\UserAuthenticator::class)
+    ->addArgument(\Brbb\IGame\OAuth\Domain\AuthRepository::class);
+
+// Add controllers to container
+$container->addServiceProvider(new \Brbb\Apps\IGame\Container\ServiceProvider\Controller\AuthorizeServiceProvider());
 
 // Process request
 $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
 );
 
-$response = $container->get(\League\Route\Router::class)->dispatch($request);
+/** @var \League\Route\Router $router */
+$router = $container->get(\League\Route\Router::class);
+$response = $router->dispatch($request);
 
 // send the response to the browser
 (new Laminas\HttpHandlerRunner\Emitter\SapiEmitter)->emit($response);
