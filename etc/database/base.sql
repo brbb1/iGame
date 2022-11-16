@@ -60,32 +60,38 @@ CREATE TABLE IF NOT EXISTS `draws`
     CHECK (draws.point_chance + draws.money_chance + draws.object_chance = 100)
 );
 
-CREATE TABLE IF NOT EXISTS `points_prizes`
+CREATE TABLE IF NOT EXISTS `player_points`
 (
     `id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    `status` VARCHAR(127) NOT NULL,
+    `player_id` INT NOT NULL,
     `points_id` INT NOT NUll,
+    `status` VARCHAR(127) NOT NULL,
     `count` INT NOT NULL,
-    FOREIGN KEY (`points_id`) REFERENCES points (`id`)
+    FOREIGN KEY (`points_id`) REFERENCES points (`id`),
+    FOREIGN KEY (`player_id`) REFERENCES players (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `money_prizes`
+CREATE TABLE IF NOT EXISTS `players_money`
 (
     `id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    `player_id` INT NOT NULL,
+    `money_id` INT NOT NUll,
     `points_prize_id` INT,
     `status` VARCHAR(127) NOT NULL,
-    `money_id` INT NOT NUll,
     `count` INT NOT NULL,
     FOREIGN KEY (`money_id`) REFERENCES money (`id`),
-    FOREIGN KEY (`points_prize_id`) REFERENCES points_prizes (`id`)
+    FOREIGN KEY (`points_prize_id`) REFERENCES player_points (`id`),
+    FOREIGN KEY (`player_id`) REFERENCES players (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `object_prizes`
+CREATE TABLE IF NOT EXISTS `players_objects`
 (
     `id` INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    `status` VARCHAR(127) NOT NULL,
+    `player_id` INT NOT NULL,
     `object_id` INT NOT NUll,
-    FOREIGN KEY (`object_id`) REFERENCES objects (`id`)
+    `status` VARCHAR(127) NOT NULL,
+    FOREIGN KEY (`object_id`) REFERENCES objects (`id`),
+    FOREIGN KEY (`player_id`) REFERENCES players (`id`)
 );
 
 INSERT INTO `users` (id, name, password)
