@@ -24,8 +24,7 @@ final class AuthorizeController implements ControllerInterface
         $body = $request->getParsedBody();
 
         $command = new AuthenticateUserCommand((string) $body['username'], (string) $body['password']);
-        /** @var AuthResponse $response */
-        $response = ($this->handler)($command);
+        $response = $this->handler->__invoke($command);
 
         $payload = [
             'userId' => $response->getId()
