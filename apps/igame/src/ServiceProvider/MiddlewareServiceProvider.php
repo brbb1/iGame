@@ -24,6 +24,5 @@ class MiddlewareServiceProvider extends AbstractServiceProvider
         $this->container->add(EnsureTokenMiddleware::class)
             ->addArgument($this->container->get('secret_key'));
         $this->container->add(AuthorizeValidationMiddleware::class);
-
     }
 }

@@ -35,7 +35,7 @@ class MySqlPlayerRepository implements PlayerRepository
                 p.user_id, 
                 p.bank_account,
                 p.address,
-                pt.type as player_type, 
+                pt.name as player_type, 
                 pt.points_coefficient as points_coefficient,
                 pp.id as point_id,
                 pp.count as points,
@@ -45,12 +45,12 @@ class MySqlPlayerRepository implements PlayerRepository
                 o.name as object_name
             FROM players  p
             INNER JOIN users u on p.user_id = u.id
-            INNER JOIN players_type pt on p.type_id = pt.id
+            INNER JOIN player_types pt on p.type_id = pt.id
             LEFT JOIN player_points pp on p.id = pp.player_id 
             LEFT JOIN players_money pm on p.id = pm.player_id
             LEFT JOIN players_objects po on p.id = po.player_id
             LEFT JOIN objects o on po.object_id = o.id
-            WHERE p.id = ? and p.user_id', $userId->value(), $playerId->value());
+            WHERE p.id = ? and p.user_id = ?', $playerId->value(), $userId->value());
 
         if ($playersData->getRowCount() === 0) {
             return null;
@@ -66,7 +66,7 @@ class MySqlPlayerRepository implements PlayerRepository
                 continue;
             }
 
-            if ($data->moeny !== null) {
+            if ($data->money !== null) {
                 $prizes[] = new Prize(
                     new Money(new SubjectId((int) $data->money_id), new Count((int) $data->money))
                 );
@@ -74,9 +74,11 @@ class MySqlPlayerRepository implements PlayerRepository
                 continue;
             }
 
-            $prizes[] = new Prize(
-                new MaterialObject(new SubjectId((int) $data->object_id), new Name((string) $data->object_name))
-            );
+            if ($data->object_name !== null) {
+                $prizes[] = new Prize(
+                    new MaterialObject(new SubjectId((int) $data->object_id), new Name((string) $data->object_name))
+                );
+            }
         }
 
         return new Player(
