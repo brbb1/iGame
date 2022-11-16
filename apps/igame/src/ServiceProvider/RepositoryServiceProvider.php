@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Brbb\Apps\IGame\ServiceProvider;
 
-use Brbb\IGame\OAuth\Domain\AuthRepository;
+use Brbb\IGame\OAuth\Domain\AuthUser\AuthRepository;
 use Brbb\IGame\OAuth\Infrastructure\Persistence\MySqlAuthRepository;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Nette\Database\Connection;
@@ -14,6 +14,8 @@ class RepositoryServiceProvider extends AbstractServiceProvider
 
     public function provides(string $id): bool
     {
+
+        /** @noinspection InArrayMissUseInspection */
         return in_array($id, [
             AuthRepository::class,
         ], true);

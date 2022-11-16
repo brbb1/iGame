@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\OAuth\Application\Authenticate;
 
-use Brbb\IGame\OAuth\Domain\AuthPassword;
-use Brbb\IGame\OAuth\Domain\AuthUsername;
+use Brbb\IGame\OAuth\Domain\AuthUser\AuthPassword;
+use Brbb\IGame\OAuth\Domain\AuthUser\AuthUsername;
 use Brbb\Shared\Domain\Command\CommandHandler;
 
 final class AuthenticateUserCommandHandler implements CommandHandler

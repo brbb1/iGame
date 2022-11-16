@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Brbb\IGame\OAuth\Domain;
+namespace Brbb\IGame\Game\Domain\Prize;
 
 use Brbb\Shared\Domain\ValueObject\IdValueObject;
 
-final class AuthId extends IdValueObject
+class PrizeId extends IdValueObject
 {
 
 }

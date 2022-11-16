@@ -20,7 +20,7 @@ $container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\MiddlewareSe
 
 // Add Application services
 $container->add(\Brbb\IGame\OAuth\Application\Authenticate\UserAuthenticator::class)
-    ->addArgument(\Brbb\IGame\OAuth\Domain\AuthRepository::class);
+    ->addArgument(\Brbb\IGame\OAuth\Domain\AuthUser\AuthRepository::class);
 
 // Add controllers to container
 $container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\AuthorizeServiceProvider());

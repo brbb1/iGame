@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brbb\IGame\OAuth\Domain;
+namespace Brbb\IGame\OAuth\Domain\AuthUser;
 
 final class AuthUser
 {

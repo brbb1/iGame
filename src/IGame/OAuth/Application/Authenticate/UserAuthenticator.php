@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\OAuth\Application\Authenticate;
 
-use Brbb\IGame\OAuth\Domain\AuthPassword;
-use Brbb\IGame\OAuth\Domain\AuthRepository;
-use Brbb\IGame\OAuth\Domain\AuthUser;
-use Brbb\IGame\OAuth\Domain\AuthUsername;
-use Brbb\IGame\OAuth\Domain\InvalidAuthCredentials;
-use Brbb\IGame\OAuth\Domain\InvalidAuthUsername;
+use Brbb\IGame\OAuth\Domain\AuthUser\AuthPassword;
+use Brbb\IGame\OAuth\Domain\AuthUser\AuthRepository;
+use Brbb\IGame\OAuth\Domain\AuthUser\AuthUser;
+use Brbb\IGame\OAuth\Domain\AuthUser\AuthUsername;
+use Brbb\IGame\OAuth\Domain\AuthUser\InvalidAuthCredentials;
+use Brbb\IGame\OAuth\Domain\AuthUser\InvalidAuthUsername;
 
 final class UserAuthenticator
 {
