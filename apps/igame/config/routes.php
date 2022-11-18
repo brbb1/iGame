@@ -11,7 +11,7 @@ use League\Route\Router;
 return static function (Router $router): void {
     //set routes
     $router->group('/v1', function (RouteGroup $router) {
-        $router->map(HttpMethod::PUT->value, '/oauth/authorize', AuthorizeController::class)
+        $router->map(HttpMethod::POST->value, '/oauth/authorize', AuthorizeController::class)
             ->lazyMiddlewares([\Brbb\Apps\IGame\Middleware\AuthorizeValidationMiddleware::class]);
 
         $router->map(HttpMethod::GET->value, '/game/players/{id:number}', PlayerGetController::class)

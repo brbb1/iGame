@@ -71,7 +71,7 @@ class Player
         }
 
         return [
-            'playerid' => $this->id()->value(),
+            'playerId' => $this->id()->value(),
             'userid'   => $this->userid()->value(),
             'grade'    => $this->grade()->value(),
             'prizes'   => $prizes,

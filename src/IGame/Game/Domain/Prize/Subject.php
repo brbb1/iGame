@@ -6,4 +6,5 @@ namespace Brbb\IGame\Game\Domain\Prize;
 
 interface Subject
 {
+    public function toPrimitives(): array;
 }

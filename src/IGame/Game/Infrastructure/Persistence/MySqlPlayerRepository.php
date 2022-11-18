@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\Game\Infrastructure\Persistence;
 
+use Brbb\IGame\Game\Domain\Player\Grade;
 use Brbb\IGame\Game\Domain\Player\Player;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
 use Brbb\IGame\Game\Domain\Player\PlayerRepository;
-use Brbb\IGame\Game\Domain\Player\Grade;
-use Brbb\IGame\Game\Domain\Prize\Money;
 use Brbb\IGame\Game\Domain\Prize\MaterialObject;
+use Brbb\IGame\Game\Domain\Prize\Money;
 use Brbb\IGame\Game\Domain\Prize\Points;
 use Brbb\IGame\Game\Domain\Prize\Prize;
 use Brbb\IGame\Game\Domain\Prize\SubjectId;
@@ -47,9 +47,9 @@ class MySqlPlayerRepository implements PlayerRepository
             INNER JOIN users u on p.user_id = u.id
             INNER JOIN player_types pt on p.type_id = pt.id
             LEFT JOIN player_points pp on p.id = pp.player_id 
-            LEFT JOIN players_money pm on p.id = pm.player_id
-            LEFT JOIN players_objects po on p.id = po.player_id
-            LEFT JOIN objects o on po.object_id = o.id
+            LEFT JOIN player_money pm on p.id = pm.player_id
+            LEFT JOIN player_objects po on p.id = po.player_id
+            LEFT JOIN prize_objects o on po.object_id = o.id
             WHERE p.id = ? and p.user_id = ?', $playerId->value(), $userId->value());
 
         if ($playersData->getRowCount() === 0) {
