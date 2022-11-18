@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brbb\IGame\Game\Application\Player;
+namespace Brbb\IGame\Game\Application\Player\Find;
 
 use Brbb\IGame\Game\Domain\Player\Player;
 use Brbb\IGame\Game\Domain\Player\PlayerId;

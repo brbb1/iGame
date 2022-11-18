@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Brbb\IGame\Game\Infrastructure\Persistence;
 
 use Brbb\IGame\Game\Domain\Draw\Draw;
+use Brbb\IGame\Game\Domain\Draw\DrawId;
 use Brbb\IGame\Game\Domain\Draw\DrawRepository;
 use Brbb\IGame\Game\Domain\Player\Player;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
@@ -30,6 +31,7 @@ class MySqlDrawRepository implements DrawRepository
         $drawData = $this->connection->query('
             SELECT 
                 pd.count as count,
+                d.id as id,
                 d.name as name
             FROM players  p
             INNER JOIN users u on p.user_id = u.id
@@ -43,7 +45,7 @@ class MySqlDrawRepository implements DrawRepository
 
         $draws = [];
         foreach ($drawData as $draw) {
-           $draws[] = new Draw(new Name((string) $draw->name), new Count((int) $draw->count));
+           $draws[] = new Draw(new DrawId((int) $draw->id),new Name((string) $draw->name), new Count((int) $draw->count));
         }
 
         return $draws;

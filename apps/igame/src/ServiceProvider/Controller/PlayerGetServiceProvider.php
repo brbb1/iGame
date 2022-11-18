@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Brbb\Apps\IGame\ServiceProvider\Controller;
 
 use Brbb\Apps\IGame\API\V1\Game\Players\PlayerGetController;
-use Brbb\IGame\Game\Application\Player\FindPlayerQueryHandler;
-use Brbb\IGame\Game\Application\Player\PlayerFinder;
+use Brbb\IGame\Game\Application\Player\Find\FindPlayerQueryHandler;
+use Brbb\IGame\Game\Application\Player\Find\PlayerFinder;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class PlayerGetServiceProvider extends AbstractServiceProvider

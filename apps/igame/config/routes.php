@@ -15,9 +15,11 @@ return static function (Router $router): void {
         $router->map(HttpMethod::POST->value, '/oauth/authorize', AuthorizeController::class)
             ->lazyMiddlewares([\Brbb\Apps\IGame\Middleware\AuthorizeValidationMiddleware::class]);
 
-        $router->map(HttpMethod::GET->value, '/game/players/{id:number}', PlayerGetController::class)
+        $router->map(HttpMethod::GET->value, '/game/players/{playerId:number}', PlayerGetController::class)
             ->lazyMiddlewares([\Brbb\Apps\IGame\Middleware\EnsureTokenMiddleware::class]);
-        $router->map(HttpMethod::GET->value, '/game/players/{id:number}/draws', DrawsGetController::class)
+        $router->map(HttpMethod::GET->value, '/game/players/{playerId:number}/draws', DrawsGetController::class)
+            ->lazyMiddlewares([\Brbb\Apps\IGame\Middleware\EnsureTokenMiddleware::class]);
+        $router->map(HttpMethod::POST->value, '/game/players/{playerId:number}/draws/{drawId:number}/prizes', \Brbb\Apps\IGame\API\V1\Game\Prize\PrizePostController::class)
             ->lazyMiddlewares([\Brbb\Apps\IGame\Middleware\EnsureTokenMiddleware::class]);
     });
 };

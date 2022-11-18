@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brbb\IGame\Game\Application\Draw;
+namespace Brbb\IGame\Game\Application\Draw\Find;
 
 use Brbb\IGame\Game\Domain\Draw\Draw;
 use Brbb\IGame\Game\Domain\Draw\DrawRepository;

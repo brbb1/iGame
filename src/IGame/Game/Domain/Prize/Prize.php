@@ -16,4 +16,9 @@ class Prize
         return $this->subject;
     }
 
+    public function toPrimitives(): array
+    {
+        return $this->subject->toPrimitives();
+    }
+
 }

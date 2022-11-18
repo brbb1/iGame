@@ -9,8 +9,13 @@ use Brbb\Shared\Domain\Primitives\Name;
 
 class Draw
 {
-    public function __construct(private readonly Name $name, private readonly Count $count)
+    public function __construct(private readonly DrawId $id, private readonly Name $name, private readonly Count $count)
     {
+    }
+
+    public function id(): DrawId
+    {
+        return $this->id;
     }
 
     public function name(): Name
@@ -26,8 +31,9 @@ class Draw
     public function toPrimitives(): array
     {
         return [
-           'name' => $this->name()->value(),
-           'count' => $this->count()->value(),
+            'id'    => $this->id()->value(),
+            'name'  => $this->name()->value(),
+            'count' => $this->count()->value(),
         ];
     }
 }

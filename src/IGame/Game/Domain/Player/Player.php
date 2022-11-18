@@ -67,7 +67,7 @@ class Player
     {
         $prizes = [];
         foreach ($this->prizes as $prize) {
-            $prizes[] = $prize->subject()->toPrimitives();
+            $prizes[] = $prize->toPrimitives();
         }
 
         return [

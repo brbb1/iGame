@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Brbb\Apps\IGame\API\V1\Game\Draws;
 
 use Brbb\Apps\IGame\API\ControllerInterface;
-use Brbb\IGame\Game\Application\Draw\FindDrawsQueryHandler;
-use Brbb\IGame\Game\Application\Draw\FindDrawsQuery;
+use Brbb\IGame\Game\Application\Draw\Find\FindDrawsQuery;
+use Brbb\IGame\Game\Application\Draw\Find\FindDrawsQueryHandler;
 use Psr\Http\Message\ServerRequestInterface;
 
 class DrawsGetController implements ControllerInterface
@@ -18,8 +18,8 @@ class DrawsGetController implements ControllerInterface
 
     public function __invoke(ServerRequestInterface $request, array $args = []): array
     {
-        $userId   = (int)($request->getParsedBody()['userId'] ?? 1);
-        $playerId = (int)($args['id'] ?? 1);
+        $userId   = (int)$request->getParsedBody()['userId'];
+        $playerId = (int)$args['playerId'];
 
         $draws = $this->handler->__invoke(new FindDrawsQuery($userId, $playerId));
 

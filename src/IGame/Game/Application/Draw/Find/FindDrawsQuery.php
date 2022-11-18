@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Brbb\IGame\Game\Application\Player;
+namespace Brbb\IGame\Game\Application\Draw\Find;
 
-use Brbb\Shared\Domain\Query\Query;
-
-class FindPlayerQuery implements Query
+class FindDrawsQuery
 {
 
     public function __construct(private readonly int $userId, private readonly int $playerId)

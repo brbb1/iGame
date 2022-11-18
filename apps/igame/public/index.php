@@ -21,15 +21,17 @@ $container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\MiddlewareSe
 // Add Application services
 $container->add(\Brbb\IGame\OAuth\Application\Authenticate\UserAuthenticator::class)
     ->addArgument(\Brbb\IGame\OAuth\Domain\AuthUser\AuthRepository::class);
-$container->add(\Brbb\IGame\Game\Application\Player\PlayerFinder::class)
+$container->add(\Brbb\IGame\Game\Application\Player\Find\PlayerFinder::class)
     ->addArgument(\Brbb\IGame\Game\Domain\Player\PlayerRepository::class);
-$container->add(\Brbb\IGame\Game\Application\Draw\DrawFinder::class)
+$container->add(\Brbb\IGame\Game\Application\Draw\Find\DrawFinder::class)
     ->addArgument(\Brbb\IGame\Game\Domain\Draw\DrawRepository::class);
+$container->add(\Brbb\IGame\Game\Application\Prize\Create\PrizeCreator::class);
 
 // Add controllers to container
 $container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\AuthorizeServiceProvider);
 $container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\PlayerGetServiceProvider);
 $container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\DrawsGetServiceProvider);
+$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\PrizeCreateServiceProvider());
 
 // Process request
 $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
