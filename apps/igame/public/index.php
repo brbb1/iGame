@@ -25,7 +25,10 @@ $container->add(\Brbb\IGame\Game\Application\Player\Find\PlayerFinder::class)
     ->addArgument(\Brbb\IGame\Game\Domain\Player\PlayerRepository::class);
 $container->add(\Brbb\IGame\Game\Application\Draw\Find\DrawFinder::class)
     ->addArgument(\Brbb\IGame\Game\Domain\Draw\DrawRepository::class);
-$container->add(\Brbb\IGame\Game\Application\Prize\Create\PrizeCreator::class);
+$container->add(\Brbb\IGame\Game\Application\Prize\Create\PrizeCreator::class)
+    ->addArgument(\Contributte\Database\Transaction\Transaction::class)
+    ->addArgument(\Brbb\IGame\Game\Domain\Prize\PrizeRepository::class)
+    ->addArgument(\Brbb\IGame\Game\Domain\Terms\TermsRepository::class);
 
 // Add controllers to container
 $container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\AuthorizeServiceProvider);

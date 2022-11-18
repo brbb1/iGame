@@ -24,7 +24,7 @@ class MySqlTermsRepository implements TermsRepository
 
     public function search(UserId $userId, PlayerId $playerId, DrawId $drawId): ?Terms
     {
-        $termsData = $this->connection->query('
+        $term = $this->connection->fetch('
             SELECT 
                 d.id as id,
                 d.name as name,
@@ -40,11 +40,10 @@ class MySqlTermsRepository implements TermsRepository
             INNER JOIN draws d on pd.draw_id = d.id
             WHERE p.id = ? and p.user_id = ? AND d.id = ?', $playerId->value(), $userId->value(), $drawId->value());
 
-        if ($termsData->getRowCount() === 0) {
+        if ($term === null) {
             return null;
         }
 
-        $term = $termsData[0];
         return new Terms(
             new TermsId((int) $term->id),
             new Name((string) $term->name),

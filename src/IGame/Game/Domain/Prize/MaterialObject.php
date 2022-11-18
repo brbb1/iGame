@@ -33,7 +33,7 @@ class MaterialObject implements Subject
             'type' => SubjectTypeMap::SUBJECT_TYPE[self::class],
             'id' => $this->id()->value(),
             'status' => $this->status()->value,
-            'name' => $this->id()->value(),
+            'name' => $this->name()->value(),
         ];
     }
 }

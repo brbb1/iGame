@@ -38,9 +38,7 @@ class MySqlPrizeRepository implements PrizeRepository
 
         $objects = [];
         foreach ($objectsData as $data) {
-            $objects[] = new Prize(
-                new MaterialObject(new SubjectId((int) $data->id), Status::NotDraw,  new Name($data->name))
-            );
+            $objects[] = new MaterialObject(new SubjectId((int) $data->id), Status::NotDraw,  new Name($data->name));
         }
 
         return $objects;
@@ -55,7 +53,7 @@ class MySqlPrizeRepository implements PrizeRepository
             VALUES (?, (SELECT id FROM prize_points WHERE draw_id = ?), ?, ?)
             '
             , $playerId->value(), $termsId->value()
-            , $playerId->value(), $termsId->value(), Status::Created->value, $points->value());
+            , $playerId->value(), $termsId->value(), Status::Delivered->value, $points->value());
 
         $id = $this->connection->getInsertId();
 

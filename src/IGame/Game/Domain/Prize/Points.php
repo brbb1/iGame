@@ -32,7 +32,7 @@ class Points implements Subject
         return [
             'type' => SubjectTypeMap::SUBJECT_TYPE[self::class],
             'id' => $this->id()->value(),
-            'status' => $this->status->name,
+            'status' => $this->status()->value,
             'count' => $this->count()->value(),
         ];
     }

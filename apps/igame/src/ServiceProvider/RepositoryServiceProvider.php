@@ -6,8 +6,12 @@ namespace Brbb\Apps\IGame\ServiceProvider;
 
 use Brbb\IGame\Game\Domain\Draw\DrawRepository;
 use Brbb\IGame\Game\Domain\Player\PlayerRepository;
+use Brbb\IGame\Game\Domain\Prize\PrizeRepository;
+use Brbb\IGame\Game\Domain\Terms\TermsRepository;
 use Brbb\IGame\Game\Infrastructure\Persistence\MySqlDrawRepository;
 use Brbb\IGame\Game\Infrastructure\Persistence\MySqlPlayerRepository;
+use Brbb\IGame\Game\Infrastructure\Persistence\MySqlPrizeRepository;
+use Brbb\IGame\Game\Infrastructure\Persistence\MySqlTermsRepository;
 use Brbb\IGame\OAuth\Domain\AuthUser\AuthRepository;
 use Brbb\IGame\OAuth\Infrastructure\Persistence\MySqlAuthRepository;
 use Contributte\Database\Transaction\Transaction;
@@ -25,6 +29,8 @@ class RepositoryServiceProvider extends AbstractServiceProvider
             AuthRepository::class,
             PlayerRepository::class,
             DrawRepository::class,
+            PrizeRepository::class,
+            TermsRepository::class,
         ], true);
     }
 
@@ -39,5 +45,7 @@ class RepositoryServiceProvider extends AbstractServiceProvider
         $this->container->add(AuthRepository::class,MySqlAuthRepository::class)->addArgument($connection);
         $this->container->add(PlayerRepository::class,MySqlPlayerRepository::class)->addArgument($connection);
         $this->container->add(DrawRepository::class,MySqlDrawRepository::class)->addArgument($connection);
+        $this->container->add(PrizeRepository::class,MySqlPrizeRepository::class)->addArgument($connection);
+        $this->container->add(TermsRepository::class,MySqlTermsRepository::class)->addArgument($connection);
     }
 }

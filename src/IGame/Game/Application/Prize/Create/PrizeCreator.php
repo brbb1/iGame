@@ -56,7 +56,7 @@ class PrizeCreator
                 ],
 
                 $pointsChance + $moneyChance + $objectChance => [
-                    'chance' => $terms->objectChance()->value(),
+                    'count' => $terms->objectChance()->value(),
                     'type'   => SubjectTypeMap::OBJECT,
                 ],
             ];
@@ -98,7 +98,7 @@ class PrizeCreator
             // Если произошла ошибка, разыгрываем очки
             $this->transaction->rollback();
 
-            $this->createPoints($playerId, $terms);
+            return $this->createPoints($playerId, $terms);
         }
 
         $this->transaction->commit();
