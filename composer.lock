@@ -4,8 +4,84 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67a34c6197c8cc91ca637ae526cc4c39",
+    "content-hash": "df47a41b5719135d95428fd1fc3a58bd",
     "packages": [
+        {
+            "name": "contributte/database",
+            "version": "v0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/contributte/database.git",
+                "reference": "32354ca46e22f8d082d6abc9a2f97eb51dee6787"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/contributte/database/zipball/32354ca46e22f8d082d6abc9a2f97eb51dee6787",
+                "reference": "32354ca46e22f8d082d6abc9a2f97eb51dee6787",
+                "shasum": ""
+            },
+            "require": {
+                "nette/database": "^3.0.2",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "nette/di": "^3.0.1",
+                "nette/tester": "~2.3.2",
+                "ninjify/nunjuck": "^0.3.0",
+                "ninjify/qa": "^0.13",
+                "phpstan/phpstan": "^1.0.0",
+                "phpstan/phpstan-deprecation-rules": "^1.0.0",
+                "phpstan/phpstan-nette": "^1.0.0",
+                "phpstan/phpstan-strict-rules": "^1.0.0"
+            },
+            "suggest": {
+                "nette/di": "to use TransactionExtesion [CompilerExtension]"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Contributte\\Database\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Milan Felix Šulc",
+                    "homepage": "https://f3l1x.io"
+                }
+            ],
+            "description": "Extra contrib to nette/database",
+            "homepage": "https://github.com/contributte/database",
+            "keywords": [
+                "activerecord",
+                "database",
+                "nette",
+                "transaction"
+            ],
+            "support": {
+                "issues": "https://github.com/contributte/database/issues",
+                "source": "https://github.com/contributte/database/tree/v0.3.1"
+            },
+            "funding": [
+                {
+                    "url": "https://contributte.org/partners.html",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/f3l1x",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-12-30T20:42:41+00:00"
+        },
         {
             "name": "firebase/php-jwt",
             "version": "v6.3.1",

@@ -12,6 +12,7 @@ use Brbb\IGame\Game\Domain\Prize\MaterialObject;
 use Brbb\IGame\Game\Domain\Prize\Money;
 use Brbb\IGame\Game\Domain\Prize\Points;
 use Brbb\IGame\Game\Domain\Prize\Prize;
+use Brbb\IGame\Game\Domain\Prize\Status;
 use Brbb\IGame\Game\Domain\Prize\SubjectId;
 use Brbb\IGame\Shared\Domain\Address;
 use Brbb\IGame\Shared\Domain\BankAccount;
@@ -38,10 +39,13 @@ class MySqlPlayerRepository implements PlayerRepository
                 pt.name as player_type, 
                 pt.points_coefficient as points_coefficient,
                 pp.id as point_id,
+                pp.status as point_status,
                 pp.count as points,
                 pm.id as money_id,
+                pm.status as money_status,
                 pm.count as money,
-                o.id as object_id,
+                po.id as object_id,
+                po.status as object_status,
                 o.name as object_name
             FROM players  p
             INNER JOIN users u on p.user_id = u.id
@@ -60,7 +64,7 @@ class MySqlPlayerRepository implements PlayerRepository
         foreach ($playersData as $data) {
             if ($data->points !== null) {
                 $prizes[] = new Prize(
-                    new Points(new SubjectId((int) $data->point_id), new Count((int) $data->points))
+                    new Points(new SubjectId((int) $data->point_id), Status::from($data->points_status), new Count((int) $data->points))
                 );
 
                 continue;
@@ -68,7 +72,7 @@ class MySqlPlayerRepository implements PlayerRepository
 
             if ($data->money !== null) {
                 $prizes[] = new Prize(
-                    new Money(new SubjectId((int) $data->money_id), new Count((int) $data->money))
+                    new Money(new SubjectId((int) $data->money_id), Status::from($data->money_status), new Count((int) $data->money))
                 );
 
                 continue;
@@ -76,7 +80,7 @@ class MySqlPlayerRepository implements PlayerRepository
 
             if ($data->object_name !== null) {
                 $prizes[] = new Prize(
-                    new MaterialObject(new SubjectId((int) $data->object_id), new Name((string) $data->object_name))
+                    new MaterialObject(new SubjectId((int) $data->object_id), Status::from($data->object_status), new Name((string) $data->object_name))
                 );
             }
         }

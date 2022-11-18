@@ -10,6 +10,7 @@ use Brbb\IGame\Game\Infrastructure\Persistence\MySqlDrawRepository;
 use Brbb\IGame\Game\Infrastructure\Persistence\MySqlPlayerRepository;
 use Brbb\IGame\OAuth\Domain\AuthUser\AuthRepository;
 use Brbb\IGame\OAuth\Infrastructure\Persistence\MySqlAuthRepository;
+use Contributte\Database\Transaction\Transaction;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Nette\Database\Connection;
 
@@ -20,6 +21,7 @@ class RepositoryServiceProvider extends AbstractServiceProvider
     {
 
         return in_array($id, [
+            Transaction::class,
             AuthRepository::class,
             PlayerRepository::class,
             DrawRepository::class,
@@ -33,6 +35,7 @@ class RepositoryServiceProvider extends AbstractServiceProvider
 
         $connection = new Connection($params['dns'], $params['user'], $params['password']);
 
+        $this->container->add(Transaction::class)->addArgument($connection);
         $this->container->add(AuthRepository::class,MySqlAuthRepository::class)->addArgument($connection);
         $this->container->add(PlayerRepository::class,MySqlPlayerRepository::class)->addArgument($connection);
         $this->container->add(DrawRepository::class,MySqlDrawRepository::class)->addArgument($connection);

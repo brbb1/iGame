@@ -8,7 +8,7 @@ use Brbb\Shared\Domain\Primitives\Name;
 
 class MaterialObject implements Subject
 {
-    public function __construct(private readonly SubjectId $id, private readonly Name $name)
+    public function __construct(private readonly SubjectId $id, private readonly Status $status, private readonly Name $name)
     {
     }
 
@@ -22,12 +22,17 @@ class MaterialObject implements Subject
         return $this->name;
     }
 
+    public function status(): Status
+    {
+        return $this->status;
+    }
 
     public function toPrimitives(): array
     {
         return [
-            'type' => 'material_object',
+            'type' => SubjectTypeMap::SUBJECT_TYPE[self::class],
             'id' => $this->id()->value(),
+            'status' => $this->status()->value,
             'name' => $this->id()->value(),
         ];
     }

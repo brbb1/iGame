@@ -33,7 +33,9 @@ CREATE TABLE IF NOT EXISTS `draws`
     `current_budget`     INT                NOT NULL,
     `object_chance`      SMALLINT           NOT NULL,
     `current_object_ctn` SMALLINT           NOT NULL,
-    CHECK (draws.point_chance + draws.money_chance + draws.object_chance = 100)
+    CHECK (draws.point_chance + draws.money_chance + draws.object_chance = 100),
+    CHECK (draws.current_budget >= 0),
+    CHECK (draws.current_object_ctn >= 0)
 );
 
 CREATE TABLE IF NOT EXISTS `players_draws`
@@ -146,5 +148,5 @@ INSERT INTO `prize_objects` (id, draw_id, name)
 VALUES (10, 1, 'notebook');
 
 INSERT INTO `players_draws` (player_id, draw_id, count)
-VaLUES (2, 1, 100);
+VaLUES (2, 1, 100000000);
 

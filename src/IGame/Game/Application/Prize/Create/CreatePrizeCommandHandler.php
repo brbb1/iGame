@@ -16,7 +16,7 @@ class CreatePrizeCommandHandler
     {
     }
 
-    public function __invoke(CreatePrizeCommand $command): ?Prize
+    public function __invoke(CreatePrizeCommand $command): Prize
     {
         $userId = new UserId($command->userId());
         $playerId = new PlayerId($command->playerId());

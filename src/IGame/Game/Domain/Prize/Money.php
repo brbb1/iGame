@@ -8,7 +8,7 @@ use Brbb\Shared\Domain\Primitives\Count;
 
 class Money implements Subject
 {
-    public function __construct(private readonly SubjectId $id, private readonly Count $count)
+    public function __construct(private readonly SubjectId $id, private readonly Status $status, private readonly Count $count)
     {
     }
 
@@ -22,11 +22,17 @@ class Money implements Subject
         return $this->count;
     }
 
+    public function status(): Status
+    {
+        return $this->status;
+    }
+
     public function toPrimitives(): array
     {
         return [
-            'type' => 'money',
+            'type' => SubjectTypeMap::SUBJECT_TYPE[self::class],
             'id' => $this->id()->value(),
+            'status' => $this->status()->value,
             'count' => $this->id()->value(),
         ];
     }
