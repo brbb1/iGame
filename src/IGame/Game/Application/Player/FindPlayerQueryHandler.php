@@ -11,6 +11,7 @@ use Brbb\Shared\Domain\Query\QueryHandler;
 
 class FindPlayerQueryHandler implements QueryHandler
 {
+
     public function __construct(private readonly PlayerFinder $finder)
     {
     }
@@ -22,5 +23,4 @@ class FindPlayerQueryHandler implements QueryHandler
 
         return $this->finder->find($userId, $playerId);
     }
-
 }

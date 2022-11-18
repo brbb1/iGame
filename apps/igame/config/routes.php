@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Brbb\Apps\IGame\API\V1\Game\Draws\DrawsGetController;
 use Brbb\Apps\IGame\API\V1\OAuth\AuthorizeController;
 use Brbb\Apps\IGame\API\V1\Game\Players\PlayerGetController;
 use Brbb\Apps\IGame\Enum\HttpMethod;
@@ -15,6 +16,8 @@ return static function (Router $router): void {
             ->lazyMiddlewares([\Brbb\Apps\IGame\Middleware\AuthorizeValidationMiddleware::class]);
 
         $router->map(HttpMethod::GET->value, '/game/players/{id:number}', PlayerGetController::class)
+            ->lazyMiddlewares([\Brbb\Apps\IGame\Middleware\EnsureTokenMiddleware::class]);
+        $router->map(HttpMethod::GET->value, '/game/players/{id:number}/draws', DrawsGetController::class)
             ->lazyMiddlewares([\Brbb\Apps\IGame\Middleware\EnsureTokenMiddleware::class]);
     });
 };

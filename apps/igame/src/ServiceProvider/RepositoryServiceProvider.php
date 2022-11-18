@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Brbb\Apps\IGame\ServiceProvider;
 
+use Brbb\IGame\Game\Domain\Draw\DrawRepository;
 use Brbb\IGame\Game\Domain\Player\PlayerRepository;
+use Brbb\IGame\Game\Infrastructure\Persistence\MySqlDrawRepository;
 use Brbb\IGame\Game\Infrastructure\Persistence\MySqlPlayerRepository;
 use Brbb\IGame\OAuth\Domain\AuthUser\AuthRepository;
 use Brbb\IGame\OAuth\Infrastructure\Persistence\MySqlAuthRepository;
@@ -20,6 +22,7 @@ class RepositoryServiceProvider extends AbstractServiceProvider
         return in_array($id, [
             AuthRepository::class,
             PlayerRepository::class,
+            DrawRepository::class,
         ], true);
     }
 
@@ -32,5 +35,6 @@ class RepositoryServiceProvider extends AbstractServiceProvider
 
         $this->container->add(AuthRepository::class,MySqlAuthRepository::class)->addArgument($connection);
         $this->container->add(PlayerRepository::class,MySqlPlayerRepository::class)->addArgument($connection);
+        $this->container->add(DrawRepository::class,MySqlDrawRepository::class)->addArgument($connection);
     }
 }

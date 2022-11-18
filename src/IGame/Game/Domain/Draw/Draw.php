@@ -6,7 +6,6 @@ namespace Brbb\IGame\Game\Domain\Draw;
 
 use Brbb\Shared\Domain\Primitives\Count;
 use Brbb\Shared\Domain\Primitives\Name;
-use Brbb\Shared\Domain\ValueObject\StringValueObject;
 
 class Draw
 {
@@ -27,8 +26,8 @@ class Draw
     public function toPrimitives(): array
     {
         return [
-           'name' => $this->name(),
-           'count' => $this->count(),
+           'name' => $this->name()->value(),
+           'count' => $this->count()->value(),
         ];
     }
 }

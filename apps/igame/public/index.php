@@ -23,10 +23,13 @@ $container->add(\Brbb\IGame\OAuth\Application\Authenticate\UserAuthenticator::cl
     ->addArgument(\Brbb\IGame\OAuth\Domain\AuthUser\AuthRepository::class);
 $container->add(\Brbb\IGame\Game\Application\Player\PlayerFinder::class)
     ->addArgument(\Brbb\IGame\Game\Domain\Player\PlayerRepository::class);
+$container->add(\Brbb\IGame\Game\Application\Draw\DrawFinder::class)
+    ->addArgument(\Brbb\IGame\Game\Domain\Draw\DrawRepository::class);
 
 // Add controllers to container
 $container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\AuthorizeServiceProvider);
 $container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\PlayerGetServiceProvider);
+$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\DrawsGetServiceProvider);
 
 // Process request
 $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(

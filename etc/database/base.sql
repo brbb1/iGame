@@ -39,9 +39,11 @@ CREATE TABLE IF NOT EXISTS `draws`
 CREATE TABLE IF NOT EXISTS `players_draws`
 (
     `player_id` INT NOT NULL,
-    `draws_id`  INT NOT NULL,
+    `draw_id`  INT NOT NULL,
     `count`     INT NOT NULL,
-    PRIMARY KEY (`player_id`, `draws_id`)
+    PRIMARY KEY (`player_id`, `draw_id`),
+    FOREIGN KEY (`player_id`) REFERENCES players (`id`),
+    FOREIGN KEY (`draw_id`) REFERENCES draws (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `prize_points`
@@ -102,14 +104,19 @@ CREATE TABLE IF NOT EXISTS `player_objects`
     FOREIGN KEY (`player_id`) REFERENCES players (`id`)
 );
 
-INSERT INTO `users` (id, name, password)
-VALUES (1, 'user1', 'pass1');
+# User without player
 INSERT INTO `users` (id, name, password)
 VALUES (2, 'user2', 'pass2');
+
+# User with player
+INSERT INTO `users` (id, name, password)
+VALUES (1, 'user1', 'pass1');
 INSERT INTO `player_types`(id, name, points_coefficient)
 VALUES (1, 'VIP', 1000);
 INSERT INTO `players` (id, user_id, type_id, bank_account, address)
 VALUES (2, 1, 1, 'visa', 'kazahstan');
+
+# Drow
 INSERT INTO `draws` (id, name, point_chance, max_points, money_chance, current_budget, object_chance,
                      current_object_ctn)
 VALUES (1, 'black friday', 60, 100000, 30, 100000000, 10, 10);
@@ -137,6 +144,7 @@ INSERT INTO `prize_objects` (id, draw_id, name)
 VALUES (9, 1, 'notebook');
 INSERT INTO `prize_objects` (id, draw_id, name)
 VALUES (10, 1, 'notebook');
-INSERT INTO `players_draws` (player_id, draws_id, count)
-VaLUES (1, 1, 100);
+
+INSERT INTO `players_draws` (player_id, draw_id, count)
+VaLUES (2, 1, 100);
 
