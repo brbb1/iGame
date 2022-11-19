@@ -38,7 +38,8 @@ class MySqlTermsRepository implements TermsRepository
             INNER JOIN users u on p.user_id = u.id
             INNER JOIN  players_draws pd on p.id = pd.player_id
             INNER JOIN draws d on pd.draw_id = d.id
-            WHERE p.id = ? and p.user_id = ? AND d.id = ?', $playerId->value(), $userId->value(), $drawId->value());
+            WHERE p.id = ? and p.user_id = ? AND d.id = ? AND pd.count > 0'
+            , $playerId->value(), $userId->value(), $drawId->value());
 
         if ($term === null) {
             return null;

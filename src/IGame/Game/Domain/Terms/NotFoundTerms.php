@@ -10,6 +10,6 @@ final class NotFoundTerms extends RuntimeException
 {
     public function __construct()
     {
-        parent::__construct('Terms not created');
+        parent::__construct('Terms not found');
     }
 }
