@@ -14,7 +14,7 @@
 3. Запустить ```docker exec igame-app composer install```
 4. Запуск нагрузочного тестирования
     ```ab -n 10000 -c 150 -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.-aZ-fmWj6R_sG58mKbGaDiUijHH26sOupSsajQ7q548' -m POST http://localhost:8090/v1/game/draws/1/prizes```
-5. Запуск команды по отправке денег ```docker exec -it igame-app apps/igame/bin/console count```, где count количество обрабатываемых записей за раз
+5. Запуск команды по отправке денег ```docker exec -it igame-app apps/igame/bin/console count```, где ```count``` количество обрабатываемых записей за раз
     
 
 ## Описание*
