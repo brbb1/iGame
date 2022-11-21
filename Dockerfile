@@ -14,5 +14,3 @@ RUN docker-php-ext-enable pdo_mysql opcache
 
 COPY . /var/www
 EXPOSE 9000
-
-RUN composer install
