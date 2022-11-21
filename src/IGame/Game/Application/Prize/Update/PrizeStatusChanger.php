@@ -8,8 +8,8 @@ use Brbb\IGame\Game\Application\Prize\Create\PrizeCreator;
 use Brbb\IGame\Game\Domain\MaterialObject\MaterialObjectRepository;
 use Brbb\IGame\Game\Domain\Money\MoneyRepository;
 use Brbb\IGame\Game\Domain\Points\PointsRepository;
+use Brbb\IGame\Game\Domain\Prize\CantReplacePrize;
 use Brbb\IGame\Game\Domain\Prize\Prize;
-use Brbb\IGame\Game\Domain\Prize\ReplacePrize;
 use Brbb\IGame\Game\Domain\Prize\Type;
 use Contributte\Database\Transaction\Transaction;
 
@@ -46,7 +46,7 @@ class PrizeStatusChanger
         } catch (\Throwable $e) {
             $this->transaction->rollback();
 
-            throw new ReplacePrize();
+            throw new CantReplacePrize();
         }
 
         $this->transaction->commit();

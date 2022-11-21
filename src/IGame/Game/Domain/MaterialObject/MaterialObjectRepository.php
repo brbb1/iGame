@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\Game\Domain\MaterialObject;
 
+use Brbb\IGame\Game\Domain\Draw\DrawId;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
+use Brbb\IGame\Game\Domain\Points\Points;
 use Brbb\IGame\Game\Domain\Prize\PrizeId;
 use Brbb\IGame\Game\Domain\Terms\TermsId;
 
@@ -19,4 +21,6 @@ interface MaterialObjectRepository
 
     public function create(PlayerId $playerId, TermsId $termsId, MaterialObject $object): MaterialObject;
 
+    /** @return Points[] */
+    public function searchAllByDraw(PlayerId $playerId, DrawId $drawId): array;
 }

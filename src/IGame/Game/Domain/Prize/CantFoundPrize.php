@@ -6,7 +6,7 @@ namespace Brbb\IGame\Game\Domain\Prize;
 
 use RuntimeException;
 
-final class NotFoundPrize extends RuntimeException
+final class CantFoundPrize extends RuntimeException
 {
     public function __construct()
     {

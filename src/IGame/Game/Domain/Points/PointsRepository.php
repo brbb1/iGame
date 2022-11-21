@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\Game\Domain\Points;
 
+use Brbb\IGame\Game\Domain\Draw\DrawId;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
 use Brbb\IGame\Game\Domain\Prize\PrizeId;
 use Brbb\IGame\Game\Domain\Terms\TermsId;
@@ -16,4 +17,7 @@ interface PointsRepository
     public function save(Points $prize): Points;
 
     public function create(PlayerId $playerId, TermsId $termsId, Count $points): Points;
+
+    /** @return Points[] */
+    public function searchAllByDraw(PlayerId $playerId, DrawId $drawId): array;
 }

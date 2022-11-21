@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\Game\Infrastructure\Persistence;
 
+use Brbb\IGame\Game\Domain\Draw\DrawId;
 use Brbb\IGame\Game\Domain\MaterialObject\MaterialObject;
 use Brbb\IGame\Game\Domain\MaterialObject\MaterialObjectRepository;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
@@ -93,5 +94,38 @@ class MySqlMaterialObjectRepository implements MaterialObjectRepository
         $id = $this->connection->getInsertId();
 
         return new MaterialObject(new PrizeId((int)$id), Status::Created, $object->name(), $playerId);
+    }
+
+    public function searchAllByDraw(PlayerId $playerId, DrawId $drawId): array
+    {
+        $rows = $this->connection->query('
+            SELECT 
+                o.id as id,
+                o.status as status,
+                po.name as name,
+                o.player_id as player_id
+            FROM players p
+            INNER JOIN players_draws pd on p.id = pd.player_id and pd.draw_id = ?
+            INNER JOIN draws d on pd.draw_id = d.id
+            INNER JOIN prize_objects po on d.id = po.draw_id
+            INNER JOIN player_objects o on p.id = o.player_id and po.id = o.object_id
+            WHERE p.id = ?'
+            , $drawId->value(), $playerId->value());
+
+        if ($rows->getRowCount() === 0) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($rows as $row) {
+            $result[] = new MaterialObject(
+                new PrizeId((int)$row->id),
+                Status::from((string)$row->status),
+                new Name((string)$row->name),
+                new PlayerId((int)$row->player_id),
+            );
+        }
+
+        return $result;
     }
 }

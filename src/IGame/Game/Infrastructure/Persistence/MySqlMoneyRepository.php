@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\Game\Infrastructure\Persistence;
 
+use Brbb\IGame\Game\Domain\Draw\DrawId;
 use Brbb\IGame\Game\Domain\Money\Money;
 use Brbb\IGame\Game\Domain\Money\MoneyRepository;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
@@ -39,7 +40,7 @@ class MySqlMoneyRepository implements MoneyRepository
         return new Money(
             new PrizeId((int)$row->id),
             Status::from((string)$row->status),
-            new Count((int)$row->count) ,
+            new Count((int)$row->count),
             new PlayerId((int)$row->player_id),
         );
     }
@@ -48,7 +49,7 @@ class MySqlMoneyRepository implements MoneyRepository
     {
         $this->connection->query('
             UPDATE player_money SET status = ? WHERE id = ?'
-        , $prize->status()->value, $prize->id()->value());
+            , $prize->status()->value, $prize->id()->value());
 
         return $prize;
     }
@@ -77,5 +78,38 @@ class MySqlMoneyRepository implements MoneyRepository
         $this->connection->query('
             UPDATE player_money SET points_prize_id = ? WHERE id = ?'
             , $prizeId->value(), $moneyId->value());
+    }
+
+    public function searchAllByDraw(PlayerId $playerId, DrawId $drawId): array
+    {
+        $rows = $this->connection->query('
+            SELECT 
+                m.id as id,
+                m.status as status,
+                m.count as count,
+                m.player_id as player_id
+            FROM players p
+            INNER JOIN players_draws pd on p.id = pd.player_id and pd.draw_id = ?
+            INNER JOIN draws d on pd.draw_id = d.id
+            INNER JOIN prize_money pm on d.id = pm.draw_id
+            INNER JOIN player_money m on p.id = m.player_id and pm.id = m.money_id
+            WHERE p.id = ?'
+            , $drawId->value(), $playerId->value());
+
+        if ($rows->getRowCount() === 0) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($rows as $row) {
+            $result[] = new Money(
+                new PrizeId((int)$row->id),
+                Status::from((string)$row->status),
+                new Count((int)$row->count),
+                new PlayerId((int)$row->player_id),
+            );
+        }
+
+        return $result;
     }
 }

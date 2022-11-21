@@ -6,10 +6,10 @@ namespace Brbb\IGame\Game\Domain\Prize;
 
 use RuntimeException;
 
-final class NotReplacedPrize extends RuntimeException
+final class InvalidStatusType extends RuntimeException
 {
     public function __construct()
     {
-        parent::__construct('Prize can\'t be replaced');
+        parent::__construct('Invalid prize status');
     }
 }

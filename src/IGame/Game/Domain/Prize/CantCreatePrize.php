@@ -6,10 +6,10 @@ namespace Brbb\IGame\Game\Domain\Prize;
 
 use RuntimeException;
 
-final class WrongType extends RuntimeException
+final class CantCreatePrize extends RuntimeException
 {
     public function __construct()
     {
-        parent::__construct('Wrong prize type');
+        parent::__construct('Prize not created');
     }
 }

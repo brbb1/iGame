@@ -22,7 +22,6 @@ class Player
         private readonly Coefficient $pointsCoefficient,
         private readonly BankAccount $bankAccount,
         private readonly Address     $address,
-        private readonly array       $prizes,
     )
     {
     }
@@ -57,24 +56,12 @@ class Player
         return $this->address;
     }
 
-    /** @return Prize[] */
-    public function prizes(): array
-    {
-        return $this->prizes;
-    }
-
     public function toPrimitives(): array
     {
-        $prizes = [];
-        foreach ($this->prizes as $prize) {
-            $prizes[] = $prize->toPrimitives();
-        }
-
         return [
             'playerId' => $this->id()->value(),
             'userid'   => $this->userid()->value(),
             'grade'    => $this->grade()->value(),
-            'prizes'   => $prizes,
         ];
     }
 

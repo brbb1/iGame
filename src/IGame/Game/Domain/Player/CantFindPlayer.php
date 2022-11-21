@@ -6,10 +6,10 @@ namespace Brbb\IGame\Game\Domain\Player;
 
 use RuntimeException;
 
-final class NotFoundPlayer extends RuntimeException
+final class CantFindPlayer extends RuntimeException
 {
     public function __construct()
     {
-        parent::__construct('Player not find');
+        parent::__construct('Can\'t find player');
     }
 }

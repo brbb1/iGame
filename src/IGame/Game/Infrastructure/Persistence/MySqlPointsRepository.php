@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\Game\Infrastructure\Persistence;
 
+use Brbb\IGame\Game\Domain\Draw\DrawId;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
 use Brbb\IGame\Game\Domain\Points\Points;
 use Brbb\IGame\Game\Domain\Points\PointsRepository;
@@ -66,6 +67,39 @@ class MySqlPointsRepository implements PointsRepository
 
         $id = $this->connection->getInsertId();
 
-        return new Points(new PrizeId((int)$id), Status::Created, $points, $playerId);
+        return new Points(new PrizeId((int)$id), Status::Delivered, $points, $playerId);
+    }
+
+    public function searchAllByDraw(PlayerId $playerId, DrawId $drawId): array
+    {
+        $rows = $this->connection->query('
+            SELECT 
+                plp.id as id,
+                plp.status as status,
+                plp.count as count,
+                plp.player_id as player_id
+            FROM players p
+            INNER JOIN players_draws pd on p.id = pd.player_id and pd.draw_id = ?
+            INNER JOIN draws d on pd.draw_id = d.id
+            INNER JOIN prize_points pp on d.id = pp.draw_id
+            INNER JOIN player_points plp on p.id = plp.player_id
+            WHERE p.id = ?'
+            , $drawId->value(), $playerId->value());
+
+        if ($rows->getRowCount() === 0) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($rows as $row) {
+            $result[] = new Points(
+                new PrizeId((int)$row->id),
+                Status::from((string)$row->status),
+                new Count((int)$row->count),
+                new PlayerId((int)$row->player_id),
+            );
+        }
+
+        return $result;
     }
 }

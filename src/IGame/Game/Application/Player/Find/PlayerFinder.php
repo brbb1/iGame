@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\Game\Application\Player\Find;
 
-use Brbb\IGame\Game\Domain\Player\NotFoundPlayer;
+use Brbb\IGame\Game\Domain\Player\CantFindPlayer;
 use Brbb\IGame\Game\Domain\Player\Player;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
 use Brbb\IGame\Game\Domain\Player\PlayerRepository;
@@ -20,7 +20,7 @@ class PlayerFinder
     {
         $player = $this->repository->searchByUser($userId);
         if ($player === null) {
-            throw new NotFoundPlayer();
+            throw new CantFindPlayer();
         }
 
         return $player;
@@ -30,7 +30,7 @@ class PlayerFinder
     {
         $player = $this->repository->search($id);
         if ($player === null) {
-            throw new NotFoundPlayer();
+            throw new CantFindPlayer();
         }
 
         return $player;

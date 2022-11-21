@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Brbb\IGame\Game\Domain\Points;
 
 use Brbb\IGame\Game\Domain\Player\PlayerId;
-use Brbb\IGame\Game\Domain\Prize\NotReplacedPrize;
+use Brbb\IGame\Game\Domain\Prize\CantReplacePrize;
 use Brbb\IGame\Game\Domain\Prize\Status;
 use Brbb\IGame\Game\Domain\Prize\Prize;
 use Brbb\IGame\Game\Domain\Prize\PrizeId;
@@ -52,7 +52,7 @@ class Points implements Prize
 
     public function replace(): Points
     {
-        throw new NotReplacedPrize();
+        throw new CantReplacePrize();
     }
 
     public function deliver(): Points

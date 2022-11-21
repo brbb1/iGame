@@ -13,7 +13,7 @@ use Brbb\IGame\Game\Domain\Money\MoneyRepository;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
 use Brbb\IGame\Game\Domain\Points\Points;
 use Brbb\IGame\Game\Domain\Points\PointsRepository;
-use Brbb\IGame\Game\Domain\Prize\NotCreatedPrize;
+use Brbb\IGame\Game\Domain\Prize\CantCreatePrize;
 use Brbb\IGame\Game\Domain\Prize\Prize;
 use Brbb\IGame\Game\Domain\Prize\Type;
 use Brbb\IGame\Game\Domain\Terms\NotFoundTerms;
@@ -95,13 +95,13 @@ class PrizeCreator
             };
 
             if ($prize === null) {
-                throw new NotCreatedPrize();
+                throw new CantCreatePrize();
             }
         } catch (NotFoundTerms $e) {
             $this->transaction->rollback();
 
             throw $e;
-        } catch (NotCreatedPrize|\Throwable $e) {
+        } catch (CantCreatePrize|\Throwable $e) {
             // Если произошла ошибка, разыгрываем очки
             $this->transaction->rollback();
 

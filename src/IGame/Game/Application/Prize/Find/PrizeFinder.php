@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\Game\Application\Prize\Find;
 
+use Brbb\IGame\Game\Domain\Draw\DrawId;
 use Brbb\IGame\Game\Domain\MaterialObject\MaterialObjectRepository;
 use Brbb\IGame\Game\Domain\Money\MoneyRepository;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
 use Brbb\IGame\Game\Domain\Points\PointsRepository;
-use Brbb\IGame\Game\Domain\Prize\NotFoundPrize;
+use Brbb\IGame\Game\Domain\Prize\CantFoundPrize;
 use Brbb\IGame\Game\Domain\Prize\Prize;
 use Brbb\IGame\Game\Domain\Prize\PrizeId;
 use Brbb\IGame\Game\Domain\Prize\Type;
@@ -32,9 +33,19 @@ class PrizeFinder
         };
 
         if ($prize === null) {
-            throw new NotFoundPrize();
+            throw new CantFoundPrize();
         }
 
         return $prize;
+    }
+
+    /** @return Prize[] */
+    public function findAll(PlayerId $id, DrawId $drawId): array
+    {
+        $points = $this->pointsRepository->searchAllByDraw($id, $drawId);
+        $money = $this->moneyRepository->searchAllByDraw($id, $drawId);
+        $objects = $this->objectRepository->searchAllByDraw($id, $drawId);
+
+        return array_merge($points, $money, $objects);
     }
 }

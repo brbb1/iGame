@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Brbb\IGame\Game\Domain\Money;
 
 use Brbb\IGame\Game\Domain\Player\PlayerId;
+use Brbb\IGame\Game\Domain\Prize\InvalidStatusType;
 use Brbb\IGame\Game\Domain\Prize\Status;
 use Brbb\IGame\Game\Domain\Prize\Prize;
 use Brbb\IGame\Game\Domain\Prize\PrizeId;
@@ -51,6 +52,10 @@ class Money implements Prize
 
     public function replace(): Money
     {
+        if ($this->status !== Status::Created) {
+            throw new InvalidStatusType();
+        }
+
         $this->status = Status::Replaced;
 
         return $this;
