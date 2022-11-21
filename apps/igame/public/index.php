@@ -2,47 +2,20 @@
 
 declare(strict_types=1);
 
+use League\Route\Router;
+
 $projectDir = dirname(__DIR__);
 
-require $projectDir . '/../bootstrap.php';
-
-// Init DI container
-$container = (new League\Container\Container())->defaultToShared();
-
-// Add dependencies to container
-$container->add('project_dir', $projectDir);
-$container->add('config_dir', $projectDir . '/config');
-$container->add('secret_key', $_ENV['SECRET_KEY']);
-
-$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\RouterServiceProvider);
-$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\RepositoryServiceProvider);
-$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\MiddlewareServiceProvider);
-
-// Add Application services
-$container->add(\Brbb\IGame\OAuth\Application\Authenticate\UserAuthenticator::class)
-    ->addArgument(\Brbb\IGame\OAuth\Domain\AuthUser\AuthRepository::class);
-$container->add(\Brbb\IGame\Game\Application\Player\Find\PlayerFinder::class)
-    ->addArgument(\Brbb\IGame\Game\Domain\Player\PlayerRepository::class);
-$container->add(\Brbb\IGame\Game\Application\Draw\Find\DrawFinder::class)
-    ->addArgument(\Brbb\IGame\Game\Domain\Draw\DrawRepository::class);
-$container->add(\Brbb\IGame\Game\Application\Prize\Create\PrizeCreator::class)
-    ->addArgument(\Contributte\Database\Transaction\Transaction::class)
-    ->addArgument(\Brbb\IGame\Game\Domain\Prize\PrizeRepository::class)
-    ->addArgument(\Brbb\IGame\Game\Domain\Terms\TermsRepository::class);
-
-// Add controllers to container
-$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\AuthorizeServiceProvider);
-$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\PlayerGetServiceProvider);
-$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\DrawsGetServiceProvider);
-$container->addServiceProvider(new \Brbb\Apps\IGame\ServiceProvider\Controller\PrizeCreateServiceProvider());
+// Init container
+$container = require $projectDir . '/bootstrap.php';
 
 // Process request
 $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
 );
 
-/** @var \League\Route\Router $router */
-$router = $container->get(\League\Route\Router::class);
+/** @var Router $router */
+$router = $container->get(Router::class);
 $response = $router->dispatch($request);
 
 // send the response to the browser

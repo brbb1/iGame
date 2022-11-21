@@ -6,6 +6,7 @@ namespace Brbb\IGame\Game\Infrastructure\Persistence;
 
 use Brbb\IGame\Game\Domain\Draw\DrawId;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
+use Brbb\IGame\Game\Domain\Prize\PrizeId;
 use Brbb\IGame\Game\Domain\Terms\Terms;
 use Brbb\IGame\Game\Domain\Terms\TermsId;
 use Brbb\IGame\Game\Domain\Terms\TermsRepository;
@@ -22,7 +23,7 @@ class MySqlTermsRepository implements TermsRepository
     {
     }
 
-    public function search(UserId $userId, PlayerId $playerId, DrawId $drawId): ?Terms
+    public function search(PlayerId $playerId, DrawId $drawId): ?Terms
     {
         $term = $this->connection->fetch('
             SELECT 
@@ -35,11 +36,10 @@ class MySqlTermsRepository implements TermsRepository
                 d.object_chance as object_chance,
                 d.current_object_ctn as object_count
             FROM players  p
-            INNER JOIN users u on p.user_id = u.id
             INNER JOIN  players_draws pd on p.id = pd.player_id
             INNER JOIN draws d on pd.draw_id = d.id
-            WHERE p.id = ? and p.user_id = ? AND d.id = ? AND pd.count > 0'
-            , $playerId->value(), $userId->value(), $drawId->value());
+            WHERE p.id = ? AND d.id = ? AND pd.count > 0'
+            , $playerId->value(), $drawId->value());
 
         if ($term === null) {
             return null;
@@ -55,5 +55,39 @@ class MySqlTermsRepository implements TermsRepository
             new Chance((int) $term->object_chance),
             new Count((int) $term->object_count),
         );
+    }
+
+    public function searchByMoney(PrizeId $id): ?Terms
+    {
+        $term = $this->connection->fetch('
+            SELECT 
+                d.id as id,
+                d.name as name,
+                d.point_chance as points_chance,
+                d.max_points as max_points,
+                d.money_chance as money_chance,
+                d.current_budget as budget,
+                d.object_chance as object_chance,
+                d.current_object_ctn as object_count
+            FROM draws  d
+            INNER JOIN prize_money pm on d.id = pm.draw_id
+            WHERE pm.id = ?'
+            , $id->value());
+
+        if ($term === null) {
+            return null;
+        }
+
+        return new Terms(
+            new TermsId((int) $term->id),
+            new Name((string) $term->name),
+            new Chance((int) $term->points_chance),
+            new Count((int) $term->max_points),
+            new Chance((int) $term->money_chance),
+            new Count((int) $term->budget),
+            new Chance((int) $term->object_chance),
+            new Count((int) $term->object_count),
+        );
+
     }
 }

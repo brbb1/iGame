@@ -17,10 +17,8 @@ class PrizePostController
     public function __invoke(ServerRequestInterface $request, array $args = []): array
     {
         $userId   = (int)($request->getParsedBody()['userId']);
-        $playerId = (int)$args['playerId'];
         $drawId   = (int)$args['drawId'];
 
-        return ($this->handler->__invoke(new CreatePrizeCommand($userId, $playerId, $drawId)))->toPrimitives();
+        return ($this->handler->__invoke(new CreatePrizeCommand($userId, $drawId)))->toPrimitives();
     }
-
 }

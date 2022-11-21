@@ -9,5 +9,7 @@ enum Status: string
     case NotDraw = 'not_draw';
     case Created = 'created';
     case Delivered = 'delivered';
-    case Changed = 'changed';
+    case Received = 'received';
+    case Replaced = 'replaced';
+    case Declined = 'declined';
 }

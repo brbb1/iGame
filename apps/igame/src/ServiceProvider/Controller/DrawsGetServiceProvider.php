@@ -7,6 +7,7 @@ namespace Brbb\Apps\IGame\ServiceProvider\Controller;
 use Brbb\Apps\IGame\API\V1\Game\Draws\DrawsGetController;
 use Brbb\IGame\Game\Application\Draw\Find\DrawFinder;
 use Brbb\IGame\Game\Application\Draw\Find\FindDrawsQueryHandler;
+use Brbb\IGame\Game\Application\Player\Find\PlayerFinder;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class DrawsGetServiceProvider extends AbstractServiceProvider
@@ -20,6 +21,7 @@ class DrawsGetServiceProvider extends AbstractServiceProvider
     public function register(): void
     {
         $this->container->add(FindDrawsQueryHandler::class)
+            ->addArgument(PlayerFinder::class)
             ->addArgument(DrawFinder::class);
 
         $this->container->add(DrawsGetController::class)

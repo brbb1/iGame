@@ -6,7 +6,7 @@ namespace Brbb\IGame\Game\Domain\Player;
 
 use RuntimeException;
 
-final class NotFindPlayer extends RuntimeException
+final class NotFoundPlayer extends RuntimeException
 {
     public function __construct()
     {

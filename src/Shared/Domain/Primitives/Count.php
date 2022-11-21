@@ -8,5 +8,4 @@ use Brbb\Shared\Domain\ValueObject\IntValueObject;
 
 class Count extends IntValueObject
 {
-
 }

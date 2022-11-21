@@ -20,7 +20,7 @@ class MySqlDrawRepository implements DrawRepository
     }
 
     /** @return Draw[] */
-    public function searchAll(UserId $userId, PlayerId $playerId): array
+    public function searchAll(PlayerId $playerId): array
     {
         $drawData = $this->connection->query('
             SELECT 
@@ -28,10 +28,10 @@ class MySqlDrawRepository implements DrawRepository
                 d.id as id,
                 d.name as name
             FROM players  p
-            INNER JOIN users u on p.user_id = u.id
             INNER JOIN  players_draws pd on p.id = pd.player_id
             INNER JOIN draws d on pd.draw_id = d.id
-            WHERE p.id = ? and p.user_id = ?', $playerId->value(), $userId->value());
+            WHERE p.id = ?'
+            , $playerId->value());
 
         if ($drawData->getRowCount() === 0) {
             return [];

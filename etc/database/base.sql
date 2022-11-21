@@ -114,7 +114,7 @@ VALUES (2, 'user2', 'pass2');
 INSERT INTO `users` (id, name, password)
 VALUES (1, 'user1', 'pass1');
 INSERT INTO `player_types`(id, name, points_coefficient)
-VALUES (1, 'VIP', 1000);
+VALUES (1, 'VIP', 5);
 INSERT INTO `players` (id, user_id, type_id, bank_account, address)
 VALUES (2, 1, 1, 'visa', 'kazahstan');
 

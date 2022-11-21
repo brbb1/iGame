@@ -18,8 +18,7 @@ final class PlayerGetController implements ControllerInterface
     public function __invoke(ServerRequestInterface $request, array $args = []): array
     {
         $userId = (int) $request->getParsedBody()['userId'];
-        $playerId = (int) $args['playerId'];
 
-        return $this->handler->__invoke(new FindPlayerQuery($userId, $playerId))->toPrimitives();
+        return $this->handler->__invoke(new FindPlayerQuery($userId))->toPrimitives();
     }
 }

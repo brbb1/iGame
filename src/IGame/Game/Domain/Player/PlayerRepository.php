@@ -8,5 +8,7 @@ use Brbb\IGame\Shared\Domain\UserId;
 
 interface PlayerRepository
 {
-    public function search(UserId $userId, PlayerId $playerId): ?Player;
+    public function searchByUser(UserId $userId): ?Player;
+
+    public function search(PlayerId $id): ?Player;
 }

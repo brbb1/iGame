@@ -18,10 +18,9 @@ class DrawsGetController implements ControllerInterface
 
     public function __invoke(ServerRequestInterface $request, array $args = []): array
     {
-        $userId   = (int)$request->getParsedBody()['userId'];
-        $playerId = (int)$args['playerId'];
+        $userId = (int)$request->getParsedBody()['userId'];
 
-        $draws = $this->handler->__invoke(new FindDrawsQuery($userId, $playerId));
+        $draws = $this->handler->__invoke(new FindDrawsQuery($userId));
 
         $result = [];
         foreach ($draws as $draw) {

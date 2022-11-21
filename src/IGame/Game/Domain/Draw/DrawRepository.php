@@ -10,5 +10,5 @@ use Brbb\IGame\Shared\Domain\UserId;
 interface DrawRepository
 {
     /** @return Draw[] */
-    public function searchAll(UserId $userId, PlayerId $playerId): array;
+    public function searchAll(PlayerId $playerId): array;
 }

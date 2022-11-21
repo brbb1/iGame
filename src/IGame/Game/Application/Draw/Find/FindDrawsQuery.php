@@ -7,17 +7,12 @@ namespace Brbb\IGame\Game\Application\Draw\Find;
 class FindDrawsQuery
 {
 
-    public function __construct(private readonly int $userId, private readonly int $playerId)
+    public function __construct(private readonly int $userId)
     {
     }
 
     public function userId(): int
     {
         return $this->userId;
-    }
-
-    public function playerId(): int
-    {
-        return $this->playerId;
     }
 }

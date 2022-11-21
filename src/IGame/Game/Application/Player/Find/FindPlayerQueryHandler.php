@@ -19,8 +19,7 @@ class FindPlayerQueryHandler implements QueryHandler
     public function __invoke(FindPlayerQuery $query): Player
     {
         $userId = new UserId($query->userId());
-        $playerId = new PlayerId($query->playerId());
 
-        return $this->finder->find($userId, $playerId);
+        return $this->finder->findByUser($userId);
     }
 }

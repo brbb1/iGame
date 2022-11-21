@@ -19,4 +19,9 @@ abstract class IntValueObject
     {
         return $this->value() > $other->value();
     }
+
+    public function multiply(IntValueObject $other): int
+    {
+        return $this->value() * $other->value();
+    }
 }

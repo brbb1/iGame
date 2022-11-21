@@ -4,21 +4,17 @@ declare(strict_types=1);
 
 namespace Brbb\IGame\Game\Domain\Prize;
 
-class Prize
+use Brbb\IGame\Game\Domain\Player\PlayerId;
+
+interface Prize
 {
+    public function playerId(): PlayerId;
 
-    public function __construct(private readonly Subject $subject)
-    {
-    }
+    public function decline(): Prize;
 
-    public function subject(): Subject
-    {
-        return $this->subject;
-    }
+    public function replace(): Prize;
 
-    public function toPrimitives(): array
-    {
-        return $this->subject->toPrimitives();
-    }
+    public function deliver(): Prize;
 
+    public function toPrimitives(): array;
 }
