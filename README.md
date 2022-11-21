@@ -3,7 +3,7 @@
 
 ## Допущения
 1. Авторизация максимально простая
-2. Пароли храняться в незащищенном виде
+2. Пароли хранятся в незащищенном виде
 3. Middleware в стандартном виде не дают доступа к параметрам uri, 
 поэтому проверка доступности в хендлерах
 4. Нет логирования
@@ -15,6 +15,7 @@
 4. Запуск нагрузочного тестирования
     ```ab -n 10000 -c 150 -H 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjF9.-aZ-fmWj6R_sG58mKbGaDiUijHH26sOupSsajQ7q548' -m POST http://localhost:8090/v1/game/draws/1/prizes```
 5. Запуск команды по отправке денег ```docker exec -it igame-app apps/igame/bin/console count```, где ```count``` количество обрабатываемых записей за раз
+6. Url для подключения к базе ```jdbc:mysql://localhost:3306/igame```
     
 
 ## Описание*
