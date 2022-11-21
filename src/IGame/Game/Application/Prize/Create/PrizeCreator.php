@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Brbb\IGame\Game\Application\Prize\Create;
 
 use Brbb\IGame\Game\Application\Player\Find\PlayerFinder;
+use Brbb\IGame\Game\Application\Terms\Draw\TermsDraw;
 use Brbb\IGame\Game\Application\Terms\Find\TermsFinder;
 use Brbb\IGame\Game\Domain\Draw\DrawId;
 use Brbb\IGame\Game\Domain\MaterialObject\MaterialObjectRepository;
@@ -30,6 +31,7 @@ class PrizeCreator
         private readonly PointsRepository         $pointsRepository,
         private readonly MoneyRepository          $moneyRepository,
         private readonly MaterialObjectRepository $objectRepository,
+        private readonly TermsDraw                $termsDraw,
     )
     {
     }
@@ -44,51 +46,8 @@ class PrizeCreator
 
         $this->transaction->begin();
         try {
-            // На основе условий создаем массив для выбора какой приз создавать
-            $pointsChance = $terms->pointsChance()->value();
-            $moneyChance  = $terms->moneyChance()->value();
-            $objectChance = $terms->objectChance()->value();
-
-            $defaultPrize = [
-                'count' => $terms->maxPoints()->value(),
-                'type'  => Type::points,
-            ];
-
-            $prizes = [
-                $pointsChance => $defaultPrize,
-
-                $pointsChance + $moneyChance => [
-                    'count' => $terms->budget()->value(),
-                    'type'  => Type::money,
-                ],
-
-                $pointsChance + $moneyChance + $objectChance => [
-                    'count' => $terms->objectChance()->value(),
-                    'type'  => Type::object,
-                ],
-            ];
-
-            // Розынрыш приза
-            /** @noinspection PhpUnhandledExceptionInspection */
-            $percent = random_int(0, 99);
-
-            // Если все деньги или вещи были уже разыграны, начисляем очки
-            $validPrize = $defaultPrize;
-            foreach ($prizes as $prizePercent => $prize) {
-                if ($percent >= $prizePercent) {
-                    continue;
-                }
-
-                if ($prize['count'] === 0) {
-                    break;
-                }
-
-                $validPrize = $prize;
-                break;
-            }
-
-            // Вызываем функцию создания приза
-            $prize = match ($validPrize['type']) {
+            // Вызываем функцию создания приза на основе типа розыгрыша
+            $prize = match ($this->termsDraw->defaultDraw($terms)) {
                 Type::points => $this->createPoints($playerId, $terms),
                 Type::money => $this->createMoney($playerId, $terms),
                 Type::object => $this->createObject($playerId, $terms),

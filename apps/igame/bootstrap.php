@@ -17,6 +17,7 @@ use Brbb\IGame\Game\Application\Player\Find\PlayerFinder;
 use Brbb\IGame\Game\Application\Prize\Create\PrizeCreator;
 use Brbb\IGame\Game\Application\Prize\Find\PrizeFinder;
 use Brbb\IGame\Game\Application\Prize\Update\PrizeStatusChanger;
+use Brbb\IGame\Game\Application\Terms\Draw\TermsDraw;
 use Brbb\IGame\Game\Application\Terms\Find\TermsFinder;
 use Brbb\IGame\Game\Domain\Draw\DrawRepository;
 use Brbb\IGame\Game\Domain\MaterialObject\MaterialObjectRepository;
@@ -66,13 +67,15 @@ $container->add(PrizeStatusChanger::class)
     ->addArgument(MoneyRepository::class)
     ->addArgument(MaterialObjectRepository::class)
     ->addArgument(PrizeCreator::class);
+$container->add(TermsDraw::class);
 $container->add(PrizeCreator::class)
     ->addArgument(Transaction::class)
     ->addArgument(PlayerFinder::class)
     ->addArgument(TermsFinder::class)
     ->addArgument(PointsRepository::class)
     ->addArgument(MoneyRepository::class)
-    ->addArgument(MaterialObjectRepository::class);
+    ->addArgument(MaterialObjectRepository::class)
+    ->addArgument(TermsDraw::class);
 $container->add(MoneySender::class)
     ->addArgument(MoneyRepository::class)
     ->addArgument(PlayerFinder::class)
