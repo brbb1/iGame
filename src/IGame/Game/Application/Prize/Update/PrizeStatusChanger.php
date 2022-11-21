@@ -54,6 +54,16 @@ class PrizeStatusChanger
         return $prize;
     }
 
+    public function deliver(Prize $prize): Prize
+    {
+        return $this->save($prize->deliver());
+    }
+
+    public function startDeliver(Prize $prize): Prize
+    {
+        return $this->save($prize->startDeliver());
+    }
+
     private function save(Prize $prize): Prize
     {
         if ($prize::class === Type::points->value) {

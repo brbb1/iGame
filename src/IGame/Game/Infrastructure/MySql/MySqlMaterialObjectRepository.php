@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brbb\IGame\Game\Infrastructure\Persistence;
+namespace Brbb\IGame\Game\Infrastructure\MySql;
 
 use Brbb\IGame\Game\Domain\Draw\DrawId;
 use Brbb\IGame\Game\Domain\MaterialObject\MaterialObject;

@@ -6,6 +6,7 @@ namespace Brbb\IGame\Game\Application\Prize\Find;
 
 use Brbb\IGame\Game\Domain\Draw\DrawId;
 use Brbb\IGame\Game\Domain\MaterialObject\MaterialObjectRepository;
+use Brbb\IGame\Game\Domain\Money\Money;
 use Brbb\IGame\Game\Domain\Money\MoneyRepository;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
 use Brbb\IGame\Game\Domain\Points\PointsRepository;
@@ -39,7 +40,7 @@ class PrizeFinder
         return $prize;
     }
 
-    /** @return Prize[] */
+    /** @return Money[] */
     public function findAll(PlayerId $id, DrawId $drawId): array
     {
         $points = $this->pointsRepository->searchAllByDraw($id, $drawId);

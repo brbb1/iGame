@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brbb\IGame\Game\Infrastructure\Persistence;
+namespace Brbb\IGame\Game\Infrastructure\MySql;
 
 use Brbb\IGame\Game\Domain\Draw\DrawId;
 use Brbb\IGame\Game\Domain\Money\Money;
@@ -95,6 +95,37 @@ class MySqlMoneyRepository implements MoneyRepository
             INNER JOIN player_money m on p.id = m.player_id and pm.id = m.money_id
             WHERE p.id = ?'
             , $drawId->value(), $playerId->value());
+
+        if ($rows->getRowCount() === 0) {
+            return [];
+        }
+
+        $result = [];
+        foreach ($rows as $row) {
+            $result[] = new Money(
+                new PrizeId((int)$row->id),
+                Status::from((string)$row->status),
+                new Count((int)$row->count),
+                new PlayerId((int)$row->player_id),
+            );
+        }
+
+        return $result;
+    }
+
+    /** @return Money[] */
+    public function searchForSend(Count $count): array
+    {
+        $rows = $this->connection->query('
+            SELECT 
+                m.id as id,
+                m.status as status,
+                m.count as count,
+                m.player_id as player_id
+            FROM player_money m
+            WHERE m.status = ?
+            LIMIT ?'
+            , Status::Created->value, $count->value());
 
         if ($rows->getRowCount() === 0) {
             return [];

@@ -12,6 +12,7 @@ use Brbb\Apps\IGame\ServiceProvider\MiddlewareServiceProvider;
 use Brbb\Apps\IGame\ServiceProvider\RepositoryServiceProvider;
 use Brbb\Apps\IGame\ServiceProvider\RouterServiceProvider;
 use Brbb\IGame\Game\Application\Draw\Find\DrawFinder;
+use Brbb\IGame\Game\Application\Money\Send\MoneySender;
 use Brbb\IGame\Game\Application\Player\Find\PlayerFinder;
 use Brbb\IGame\Game\Application\Prize\Create\PrizeCreator;
 use Brbb\IGame\Game\Application\Prize\Find\PrizeFinder;
@@ -20,9 +21,11 @@ use Brbb\IGame\Game\Application\Terms\Find\TermsFinder;
 use Brbb\IGame\Game\Domain\Draw\DrawRepository;
 use Brbb\IGame\Game\Domain\MaterialObject\MaterialObjectRepository;
 use Brbb\IGame\Game\Domain\Money\MoneyRepository;
+use Brbb\IGame\Game\Domain\Money\MoneyTransactions;
 use Brbb\IGame\Game\Domain\Player\PlayerRepository;
 use Brbb\IGame\Game\Domain\Points\PointsRepository;
 use Brbb\IGame\Game\Domain\Terms\TermsRepository;
+use Brbb\IGame\Game\Infrastructure\SomeBank\SomeBankMoneyTransactions;
 use Brbb\IGame\OAuth\Application\Authenticate\UserAuthenticator;
 use Brbb\IGame\OAuth\Domain\AuthUser\AuthRepository;
 use Contributte\Database\Transaction\Transaction;
@@ -44,6 +47,7 @@ $container->addServiceProvider(new RepositoryServiceProvider);
 $container->addServiceProvider(new MiddlewareServiceProvider);
 
 // Add Application services
+$container->add(MoneyTransactions::class, SomeBankMoneyTransactions::class);
 $container->add(UserAuthenticator::class)
     ->addArgument(AuthRepository::class);
 $container->add(PlayerFinder::class)
@@ -69,6 +73,11 @@ $container->add(PrizeCreator::class)
     ->addArgument(PointsRepository::class)
     ->addArgument(MoneyRepository::class)
     ->addArgument(MaterialObjectRepository::class);
+$container->add(MoneySender::class)
+    ->addArgument(MoneyRepository::class)
+    ->addArgument(PlayerFinder::class)
+    ->addArgument(PrizeStatusChanger::class)
+    ->addArgument(MoneyTransactions::class);
 
 // Add controllers to container
 $container->addServiceProvider(new AuthorizeServiceProvider);

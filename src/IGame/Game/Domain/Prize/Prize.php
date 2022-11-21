@@ -16,5 +16,7 @@ interface Prize
 
     public function deliver(): Prize;
 
+    public function startDeliver(): Prize;
+
     public function toPrimitives(): array;
 }

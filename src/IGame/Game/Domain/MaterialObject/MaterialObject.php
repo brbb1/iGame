@@ -62,6 +62,13 @@ class MaterialObject implements Prize
         return $this;
     }
 
+    public function startDeliver(): MaterialObject
+    {
+        $this->status = Status::OnDeliver;
+
+        return $this;
+    }
+
     public function toPrimitives(): array
     {
         return [

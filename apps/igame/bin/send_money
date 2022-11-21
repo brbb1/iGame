@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+use Brbb\IGame\Game\Application\Money\Send\MoneySender;
+use Brbb\IGame\Game\Application\Money\Send\SendMoneyCommand;
+use Brbb\IGame\Game\Application\Money\Send\SendMoneyCommandHandler;
+
+$container = require dirname(__DIR__) . '/bootstrap.php';
+
+if (PHP_SAPI !== 'cli') {
+    exit;
+}
+
+$count = (int)$argv[1];
+(new SendMoneyCommandHandler($container->get(MoneySender::class)))->__invoke(new SendMoneyCommand($count));

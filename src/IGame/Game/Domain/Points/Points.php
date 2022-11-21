@@ -57,7 +57,14 @@ class Points implements Prize
 
     public function deliver(): Points
     {
-        $this->status = Status::Declined;
+        $this->status = Status::Delivered;
+
+        return $this;
+    }
+
+    public function startDeliver(): Points
+    {
+        $this->status = Status::OnDeliver;
 
         return $this;
     }

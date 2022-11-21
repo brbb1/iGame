@@ -8,6 +8,7 @@ use Brbb\IGame\Game\Domain\Player\CantFindPlayer;
 use Brbb\IGame\Game\Domain\Player\Player;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
 use Brbb\IGame\Game\Domain\Player\PlayerRepository;
+use Brbb\IGame\Game\Domain\Prize\PrizeId;
 use Brbb\IGame\Shared\Domain\UserId;
 
 class PlayerFinder
@@ -29,6 +30,16 @@ class PlayerFinder
     public function find(PlayerId $id): Player
     {
         $player = $this->repository->search($id);
+        if ($player === null) {
+            throw new CantFindPlayer();
+        }
+
+        return $player;
+    }
+
+    public function findByMoney(PrizeId $id): Player
+    {
+        $player = $this->repository->searchByMoney($id);
         if ($player === null) {
             throw new CantFindPlayer();
         }

@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Brbb\IGame\Game\Infrastructure\Persistence;
+namespace Brbb\IGame\Game\Infrastructure\MySql;
 
 use Brbb\IGame\Game\Domain\Player\Grade;
 use Brbb\IGame\Game\Domain\Player\Player;
 use Brbb\IGame\Game\Domain\Player\PlayerId;
 use Brbb\IGame\Game\Domain\Player\PlayerRepository;
+use Brbb\IGame\Game\Domain\Prize\PrizeId;
 use Brbb\IGame\Shared\Domain\Address;
 use Brbb\IGame\Shared\Domain\BankAccount;
 use Brbb\IGame\Shared\Domain\Coefficient;
@@ -75,5 +76,35 @@ class MySqlPlayerRepository implements PlayerRepository
             new BankAccount((string)$data->bank_account),
             new Address((string)($data->address))
         );
+    }
+
+    public function searchByMoney(PrizeId $id): ?Player
+    {
+        $data = $this->connection->fetch('
+            SELECT 
+                p.id as player_id, 
+                p.user_id, 
+                p.bank_account,
+                p.address,
+                pt.name as player_type, 
+                pt.points_coefficient as points_coefficient
+            FROM players  p
+            INNER JOIN player_types pt on p.type_id = pt.id
+            INNER JOIN player_money pm on p.id = pm.player_id
+            WHERE pm.id = ?', $id->value());
+
+        if ($data === null) {
+            return null;
+        }
+
+        return new Player(
+            new PlayerId((int)$data->player_id),
+            new UserId((int)$data->user_id),
+            new Grade((string)$data->player_type),
+            new Coefficient((int)$data->points_coefficient),
+            new BankAccount((string)$data->bank_account),
+            new Address((string)($data->address))
+        );
+
     }
 }

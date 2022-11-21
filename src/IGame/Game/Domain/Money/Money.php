@@ -63,7 +63,14 @@ class Money implements Prize
 
     public function deliver(): Money
     {
-        $this->status = Status::Declined;
+        $this->status = Status::Delivered;
+
+        return $this;
+    }
+
+    public function startDeliver(): Money
+    {
+        $this->status = Status::OnDeliver;
 
         return $this;
     }

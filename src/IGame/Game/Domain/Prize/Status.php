@@ -8,6 +8,7 @@ enum Status: string
 {
     case NotDraw = 'not_draw';
     case Created = 'created';
+    case OnDeliver = 'on_deliver';
     case Delivered = 'delivered';
     case Received = 'received';
     case Replaced = 'replaced';
