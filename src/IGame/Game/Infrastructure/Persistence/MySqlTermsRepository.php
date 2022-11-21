@@ -71,7 +71,8 @@ class MySqlTermsRepository implements TermsRepository
                 d.current_object_ctn as object_count
             FROM draws  d
             INNER JOIN prize_money pm on d.id = pm.draw_id
-            WHERE pm.id = ?'
+            INNER JOIN player_money p on pm.id = p.money_id
+            WHERE p.id = ?'
             , $id->value());
 
         if ($term === null) {
